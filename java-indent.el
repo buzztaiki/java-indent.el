@@ -20,8 +20,6 @@
 
 ;;; Commentary:
 
-;; Fix up java indentation.
-;;
 ;; Usage:
 ;; 
 ;; Put following to your .emacs:
