@@ -92,6 +92,7 @@ e.g.:
 
 ;; Local Variables:
 ;; lexical-binding: t
+;; indent-tabs-mode: nil
 ;; End:
 
 (provide 'java-indent)
