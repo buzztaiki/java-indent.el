@@ -20,19 +20,47 @@
 
 ;;; Commentary:
 
+;; Fix up java indentation.
+;;
+;; Usage:
 ;; 
+;; Put following to your .emacs:
+;;
+;;      (require 'java-indent)
+;;      (add-hook 'java-hook 'java-indent:setup)
+
 
 ;;; Code:
 
 (require 'cc-mode)
 
 (defun java-indent:lineup-arglist (langelem)
+  "Line up the current line on the next indnet of the open parenthesis line.
+
+e.g.:
+
+    foobar(barbaz(x,
+        y));
+    <--> c-basic-offset
+
+Works with: arglist-intro, arglist-cont-nonempty, arglist-close.
+"
   (save-excursion
     (goto-char (c-langelem-pos langelem))
     (back-to-indentation)
     (vector (+ (current-column) c-basic-offset))))
 
 (defun java-indent:lineup-arglist-close (langelem)
+  "Line up the current argument line on the same indnet of the open parenthesis line.
+
+e.g.:
+
+    foobar(barbaz(x,
+        y
+    ));
+
+Works with: arglist-close.
+"
   (save-excursion
     (goto-char (c-langelem-pos langelem))
     (back-to-indentation)
@@ -44,6 +72,7 @@
 
 ;;;###autoload
 (defun java-indent:setup ()
+  "Setup `javap-indent' on current `java-mode' buffer."
   (interactive)
   (setq c-block-stmt-2-key (java-indent:block-stmt-2-key))
   (c-set-style "java-indent"))
@@ -55,8 +84,6 @@
     (arglist-intro . java-indent:lineup-arglist)
     (arglist-cont-nonempty . java-indent:lineup-arglist)
     (arglist-close . java-indent:lineup-arglist-close)
-    ;; lineup close paren as same as args
-    ;; (arglist-close . java-indent:lineup-arglist)
     
     (block-close . 0)
     (class-close . 0)
