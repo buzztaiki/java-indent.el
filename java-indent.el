@@ -25,7 +25,7 @@
 ;; Put following to your .emacs:
 ;;
 ;;      (require 'java-indent)
-;;      (add-hook 'java-hook 'java-indent:setup)
+;;      (add-hook 'java-mode-hook 'java-indent:setup)
 
 
 ;;; Code:
