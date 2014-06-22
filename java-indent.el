@@ -34,32 +34,28 @@
 
 (require 'cc-mode)
 
-(defun java-indent:lineup-arglist (langelem)
-  "Line up the current line on the next indnet of the open parenthesis line.
+(defun java-indent:lineup-as-next-indent (langelem)
+  "Line up the current line on the next indnet of the LANGELEM line.
 
 e.g.:
 
     foobar(barbaz(x,
         y));
     <--> c-basic-offset
-
-Works with: arglist-intro, arglist-cont-nonempty, arglist-close.
 "
   (save-excursion
     (goto-char (c-langelem-pos langelem))
     (back-to-indentation)
     (vector (+ (current-column) c-basic-offset))))
 
-(defun java-indent:lineup-arglist-close (langelem)
-  "Line up the current argument line on the same indnet of the open parenthesis line.
+(defun java-indent:lineup-as-same-indent (langelem)
+  "Line up the current line on the same indnet of the LANGELEM line.
 
 e.g.:
 
     foobar(barbaz(x,
         y
     ));
-
-Works with: arglist-close.
 "
   (save-excursion
     (goto-char (c-langelem-pos langelem))
@@ -81,9 +77,9 @@ Works with: arglist-close.
  "java-indent"
  '("java"
    (c-offsets-alist
-    (arglist-intro . java-indent:lineup-arglist)
-    (arglist-cont-nonempty . java-indent:lineup-arglist)
-    (arglist-close . java-indent:lineup-arglist-close)
+    (arglist-intro . java-indent:lineup-as-next-indent)
+    (arglist-cont-nonempty . java-indent:lineup-as-next-indent)
+    (arglist-close . java-indent:lineup-as-same-indent)
     
     (block-close . 0)
     (class-close . 0)
