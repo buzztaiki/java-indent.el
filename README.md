@@ -1,4 +1,4 @@
-# java-indent.el - Fix up java indentation.
+# java-indent.el - Fix up java indentation
 
 ## Usage
 
