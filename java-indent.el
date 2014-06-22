@@ -54,6 +54,8 @@
     (arglist-intro . java-indent:lineup-arglist)
     (arglist-cont-nonempty . java-indent:lineup-arglist)
     (arglist-close . java-indent:lineup-arglist-close)
+    ;; lineup close paren as same as args
+    ;; (arglist-close . java-indent:lineup-arglist)
     
     (block-close . 0)
     (class-close . 0)
