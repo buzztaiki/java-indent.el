@@ -24,22 +24,6 @@
 
 ;;; Code:
 
-(require 'dash)
-
-(defun java-indent:langelem-eq (a b)
-  (--all? (eq (funcall it a) (funcall it b))
-          '(c-langelem-sym c-langelem-pos c-langelem-col)))
-  
-(defun java-indent:lineup-block-close (langelem)
-  (save-excursion
-    (if (java-indent:langelem-eq (car (c-guess-basic-syntax)) langelem)
-        (vector (c-langelem-col langelem))
-    (back-to-indentation)
-    (forward-char)
-    (c-backward-sexp)
-    (back-to-indentation)
-    (vector (current-column)))))
-
 (defun java-indent:lineup-arglist (langelem)
   (save-excursion
     (goto-char (c-langelem-pos langelem))
@@ -61,13 +45,13 @@
     (arglist-cont-nonempty . java-indent:lineup-arglist)
     (arglist-close . java-indent:lineup-arglist-close)
     
-    (block-close . java-indent:lineup-block-close)
-    (class-close . java-indent:lineup-block-close)
+    (block-close . 0)
+    (class-close . 0)
     (inexpr-class . 0)
     (annotation-top-cont . 0)
     (annotation-var-cont . 0)
     )
-   ))
+   (c-recognize-<>-arglists . t)))
 
 
 ;; Local Variables:
