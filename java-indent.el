@@ -42,6 +42,7 @@
   ;; add `try' keyword to block-stmt-2-key for try-with-resource
   (c-make-keywords-re t (cons "try" (c-lang-const c-block-stmt-2-kwds))))
 
+;;;###autoload
 (defun java-indent:setup ()
   (interactive)
   (setq c-block-stmt-2-key (java-indent:block-stmt-2-key))
