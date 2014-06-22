@@ -32,6 +32,20 @@
 
 (require 'cc-mode)
 
+(defgroup java-indent nil
+  "Fix up java indentation."
+  :group 'languages
+  :prefix "java-indent")
+
+(defcustom java-indent:next-indent-level 1
+  "The next indent level of `java-indent:lineup-as-next-indent'."
+  :type 'integer
+  :group 'java-indent)
+  
+(defun java-indent:next-indent-offset ()
+  "Return the next indent offset."
+  (* (c-basic-offset java-indent:next-indent-level)))
+
 (defun java-indent:lineup-as-next-indent (langelem)
   "Line up the current line on the next indnet of the LANGELEM line.
 
@@ -39,12 +53,12 @@ e.g.:
 
     foobar(barbaz(x,
         y));
-    <--> c-basic-offset
+    <--> `java-indent:next-indent-offset'
 "
   (save-excursion
     (goto-char (c-langelem-pos langelem))
     (back-to-indentation)
-    (vector (+ (current-column) c-basic-offset))))
+    (vector (+ (current-column) (java-indent:next-indent-offset)))))
 
 (defun java-indent:lineup-as-same-indent (langelem)
   "Line up the current line on the same indnet of the LANGELEM line.
