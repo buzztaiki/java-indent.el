@@ -24,6 +24,8 @@
 
 ;;; Code:
 
+(require 'cc-mode)
+
 (defun java-indent:lineup-arglist (langelem)
   (save-excursion
     (goto-char (c-langelem-pos langelem))
@@ -36,6 +38,14 @@
     (back-to-indentation)
     (vector (current-column))))
   
+(defun java-indent:block-stmt-2-key ()
+  ;; add `try' keyword to block-stmt-2-key for try-with-resource
+  (c-make-keywords-re t (cons "try" (c-lang-const c-block-stmt-2-kwds))))
+
+(defun java-indent:setup ()
+  (interactive)
+  (setq c-block-stmt-2-key (java-indent:block-stmt-2-key))
+  (c-set-style "java-indent"))
 
 (c-add-style
  "java-indent"
